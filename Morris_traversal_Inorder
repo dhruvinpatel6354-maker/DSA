@@ -1,0 +1,36 @@
+
+///Morrise travsal
+    vector<int> inorderTraversal(TreeNode* root) {
+        
+        vector<int> ans;
+        if(!root)return ans;
+        while(root){
+            if(!root->left){
+                // if we dont have left then we will move to right
+                ans.push_back(root->val);
+                root=root->right;
+            }else{
+                TreeNode* temp=root->left;
+
+                while(temp->right!=NULL && temp->right!=root)
+                    temp=temp->right;
+
+                // temp->right null means we have not visited left half
+                //so we mak back link to root and visit left
+                if(temp->right==NULL){
+                    temp->right=root;
+                    root=root->left;
+                }
+
+                //temp->right is root means left half visited. so we add in answer.
+                // we delink and move root ->right
+                if(temp->right==root){
+                    ans.push_back(root->val);
+                    temp->right=nullptr;
+                    root=root->right;
+                }
+            }
+        }
+        return ans;
+        
+    }
