@@ -1,6 +1,6 @@
 vector<int> postorderTraversal(TreeNode* root) {
         // pre order NLR
-        //post order LRN so reversing data
+        //post order RLN so reversing data
         stack<TreeNode*> st;
         vector<int> ans;
         if(!root)return ans;
