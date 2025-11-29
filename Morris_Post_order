@@ -1,0 +1,34 @@
+
+ //we are following LRN 
+ //to NRL ans then reverse
+    vector<int> postorderTraversal(TreeNode* root) {
+       vector<int> ans;
+       if(!root)return ans;
+       while(root){
+            if(!root->right){
+                ans.push_back(root->val);
+                root=root->left;
+
+            }else{
+
+                TreeNode* temp=root->right;
+                while(temp->left!=nullptr && temp->left!=root){
+                    temp=temp->left;
+                }
+                if(temp->left==nullptr){
+                    ans.push_back(root->val);
+                    temp->left=root;
+                    root=root->right;
+                }
+                if(temp->left==root){
+                    temp->left=nullptr;
+                    root=root->left;
+                }
+            
+            }
+       
+       }
+       reverse(ans.begin(),ans.end());
+       return ans;
+    }
+};
