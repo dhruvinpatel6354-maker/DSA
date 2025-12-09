@@ -1,0 +1,46 @@
+
+class NumArray {
+    vector<int> bit;
+    vector<int> a;
+    int n;
+public:
+    void update_BIT(int ind,int val){
+        while (ind<=n){
+            bit[ind]+=val;
+            ind+=(ind&-ind);
+        }
+    }
+
+    int range_query(int ind){
+        int ans=0;
+        while(ind>0){
+            ans+=bit[ind];
+            ind-=(ind&-ind);
+        }
+        return ans;
+    }
+    
+
+    
+    NumArray(vector<int>& nums) {
+        bit.resize(nums.size()+1);
+        a.resize(nums.size()+1);
+        n=nums.size();
+        for(int i=0;i<n;i++){
+           update_BIT(i+1,nums[i]);
+           a[i]=nums[i];
+        }
+    }
+    
+    void update(int index, int val) {
+        update_BIT(index+1,val-a[index]);
+        a[index]=val;
+    }
+    
+    int sumRange(int left, int right) {
+        int l=range_query(right+1);
+        int r=range_query(left);
+        //cout<<l<<" "<<r<<endl;
+        return l-r;
+    }
+};
